@@ -6,6 +6,8 @@ type Assignment = {
   class_average?: number | null
 }
 
+//test//
+
 type Course = {
   name: string
   assignments: Assignment[]
