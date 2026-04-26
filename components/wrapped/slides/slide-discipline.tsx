@@ -5,16 +5,16 @@ import { WrappedSection } from "../wrapped-section"
 
 interface SlideDisciplineProps {
   latePercent: number
-  avgLateness: string
   latestLateHours: string
+  earliestSubmissionDays: string
   label: string
 }
 
-export function SlideDiscipline({ latePercent, avgLateness, latestLateHours, label }: SlideDisciplineProps) {
+export function SlideDiscipline({ latePercent, latestLateHours, earliestSubmissionDays, label }: SlideDisciplineProps) {
   const isGood = latePercent < 20
 
   return (
-    <WrappedSection background="waves">
+    <WrappedSection background="orbs">
       <div className="text-center">
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -50,13 +50,13 @@ export function SlideDiscipline({ latePercent, avgLateness, latestLateHours, lab
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           viewport={{ once: true }}
-          className="mb-12"
+          className="mb-12 space-y-3"
         >
           <p className="text-muted-foreground">
-            Average lateness: <span className="font-semibold text-foreground">{avgLateness}</span>
+            Latest late submission: <span className="font-semibold text-foreground">{latestLateHours}</span>
           </p>
           <p className="text-muted-foreground">
-            Latest late submission: <span className="font-semibold text-foreground">{latestLateHours}</span>
+            Earliest ahead-of-deadline submission: <span className="font-semibold text-foreground">{earliestSubmissionDays}</span>
           </p>
         </motion.div>
 

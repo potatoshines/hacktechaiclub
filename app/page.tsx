@@ -57,6 +57,7 @@ type AnalyticsData = {
     vibeCheck: string
     recommendations: string[]
     caption: string
+    roast: string
   }
 }
 
@@ -96,7 +97,10 @@ function buildSlideProps(data: AnalyticsData) {
 
   // Latest late submission in hours
   const latestLateMinutes = Math.max(...courses.map(c => c.latestLateMinutes ?? 0))
-  const latestLateHours = latestLateMinutes > 0 ? `${(latestLateMinutes / 60).toFixed(1)} hrs` : "—"
+  const latestLateHours = latestLateMinutes > 0 ? `${(latestLateMinutes / 60 / 24).toFixed(1)} days` : "—"
+
+  const earliestSubmissionMinutes = Math.max(...courses.map(c => c.earliestSubmissionMinutes ?? 0))
+  const earliestSubmissionDays = earliestSubmissionMinutes > 0 ? `${(earliestSubmissionMinutes / 60 / 24).toFixed(1)} days` : "—"
 
   // Comeback: find largest positive trend
   const trendCourses = courses.filter(c => c.trend != null)
@@ -157,8 +161,8 @@ function buildSlideProps(data: AnalyticsData) {
 
     // SlideDiscipline
     latePercent,
-    avgLateness,
     latestLateHours,
+    earliestSubmissionDays,
     disciplineLabel: latePercent > 30
       ? "Chronic Last-Minute Operator"
       : latePercent > 10
@@ -191,6 +195,7 @@ function buildSlideProps(data: AnalyticsData) {
     riskProfile: persona.archetype ?? "Unknown",
     summary: persona.summary ?? "",
     vibeCheck: persona.vibeCheck ?? "",
+    roast: persona.roast ?? "",
     recommendations: persona.recommendations ?? [],
   }
 }
@@ -282,8 +287,8 @@ export default function Home() {
 
       <SlideDiscipline
         latePercent={p.latePercent}
-        avgLateness={p.avgLateness}
         latestLateHours={p.latestLateHours}
+        earliestSubmissionDays={p.earliestSubmissionDays}
         label={p.disciplineLabel}
       />
 
@@ -305,7 +310,7 @@ export default function Home() {
 
       <SlideKeyMoments moments={p.keyMoments} />
 
-      <SlideVibeCheck vibeCheck={p.vibeCheck} />
+      <SlideVibeCheck vibeCheck={p.vibeCheck} roast={p.roast} />
 
       <SlideArchetype
         riskProfile={p.riskProfile}

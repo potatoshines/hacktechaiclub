@@ -20,11 +20,8 @@ export function SlideComeback({ hasComeback, worstPoint, recoveryPoint, improvem
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mb-8 text-lg text-muted-foreground flex items-center justify-center gap-2"
+          className="mb-8 text-2xl md:text-3xl font-bold text-foreground"
         >
-          <motion.span animate={{ scale: [1, 1.2, 1], rotate: [0, 5, -5, 0] }} transition={{ duration: 2, repeat: Infinity }}>
-            {hasComeback ? "🔄" : "✨"}
-          </motion.span>
           {hasComeback ? "Comeback Story" : "Consistency Check"}
         </motion.p>
 
@@ -40,6 +37,7 @@ export function SlideComeback({ hasComeback, worstPoint, recoveryPoint, improvem
               <div>
                 <p className="text-5xl font-bold text-accent md:text-6xl">{worstPoint}</p>
                 <p className="text-sm text-muted-foreground">Worst Point</p>
+                <p className="mt-2 text-xs text-muted-foreground/80">Lowest course average from the semester.</p>
               </div>
               
               <motion.div
@@ -58,6 +56,7 @@ export function SlideComeback({ hasComeback, worstPoint, recoveryPoint, improvem
               <div>
                 <p className="text-5xl font-bold text-primary md:text-6xl">{recoveryPoint}</p>
                 <p className="text-sm text-muted-foreground">Recovery</p>
+                <p className="mt-2 text-xs text-muted-foreground/80">Your strongest course performance this semester.</p>
               </div>
             </motion.div>
 
@@ -70,6 +69,7 @@ export function SlideComeback({ hasComeback, worstPoint, recoveryPoint, improvem
                 className="mb-8 inline-block rounded-full border border-primary/30 px-6 py-3"
               >
                 <span className="text-xl font-semibold text-primary">+{improvement} improvement</span>
+                <p className="mt-2 text-xs text-muted-foreground/80">Based on second-half growth vs first-half performance.</p>
               </motion.div>
             )}
           </>

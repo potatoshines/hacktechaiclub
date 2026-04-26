@@ -41,11 +41,8 @@ export function SlideArchetype({ riskProfile, summary, recommendations }: SlideA
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mb-4 text-lg text-muted-foreground flex items-center justify-center gap-2"
+          className="mb-4 text-lg md:text-xl font-bold text-foreground"
         >
-          <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity }}>
-            👤
-          </motion.span>
           Your Profile
         </motion.p>
 

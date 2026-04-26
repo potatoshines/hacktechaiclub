@@ -81,9 +81,9 @@ export function SlideShare({ onShare, onDownload }: SlideShareProps) {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true }}
-          className="mb-4 text-5xl font-bold text-foreground md:text-6xl flex items-center justify-center gap-2"
+          className="mb-4 text-5xl font-bold text-foreground md:text-6xl"
         >
-          <span>🎬</span> {"That's a Wrap!"}
+          That's a Wrap!
         </motion.h2>
 
         <motion.p
@@ -114,7 +114,7 @@ export function SlideShare({ onShare, onDownload }: SlideShareProps) {
             {copied ? "Link Copied!" : "Share Your Canvas Wrapped"}
           </Button>
 
-          <Button
+          {/* <Button
             size="lg"
             variant="outline"
             onClick={handleDownload}
@@ -124,7 +124,7 @@ export function SlideShare({ onShare, onDownload }: SlideShareProps) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
             </svg>
             Download as PDF
-          </Button>
+          </Button> */}
         </motion.div>
 
         <motion.p

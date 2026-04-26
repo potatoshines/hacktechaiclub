@@ -11,7 +11,7 @@ interface SlideClutchProps {
 
 export function SlideClutch({ isClutch, highWeightScore, finalsScore }: SlideClutchProps) {
   return (
-    <WrappedSection background="particles">
+    <WrappedSection background="spotlight">
       <div className="text-center">
         <motion.p
           initial={{ opacity: 0, y: 20 }}

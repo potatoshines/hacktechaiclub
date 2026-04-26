@@ -4,7 +4,7 @@
 
 import { NextResponse } from "next/server"
 import { computeAnalytics } from "@/lib/analytics"
-import { classifyStudent, generatePersonaCaption } from "@/lib/llm"
+import { classifyStudent, generatePersonaCaption, generateStudentRoast } from "@/lib/llm"
 
 const CANVAS_BASE = "https://canvas.pasadena.edu/api/v1"
 
@@ -175,6 +175,19 @@ export async function POST(req: Request) {
       personaCaption = "Based on your academic performance across courses."
     }
 
+    // 3.6. Generate roast
+    let roast
+    try {
+      roast = await generateStudentRoast(
+        persona.vibeCheck,
+        persona.archetype,
+        analytics
+      )
+    } catch (err) {
+      console.error("Roast generation error:", err)
+      roast = ""
+    }
+
     // 4. Final combined object — consumed by page.tsx
     return NextResponse.json({
       student_name: canvasData.student_name,
@@ -183,6 +196,7 @@ export async function POST(req: Request) {
       persona: {
         ...persona,
         caption: personaCaption,
+        roast,
       },
     })
   } catch (err) {

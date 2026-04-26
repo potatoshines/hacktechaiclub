@@ -15,22 +15,16 @@ interface SlideClutchMomentsProps {
 
 export function SlideClutchMoments({ moments }: SlideClutchMomentsProps) {
   return (
-    <WrappedSection background="particles">
+    <WrappedSection background="gradient-mesh">
       <div className="text-center">
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mb-12 text-lg text-muted-foreground flex items-center justify-center gap-2"
+          className="mb-12 text-2xl md:text-3xl font-bold text-foreground"
         >
-          <motion.span animate={{ scale: [1, 1.2, 1], rotate: [0, 10, -10, 0] }} transition={{ duration: 2, repeat: Infinity }}>
-            ⚡
-          </motion.span>
           Clutch Moments
-          <motion.span animate={{ scale: [1, 1.2, 1], rotate: [0, -10, 10, 0] }} transition={{ duration: 2, repeat: Infinity }}>
-            🔥
-          </motion.span>
         </motion.p>
 
         <div className="space-y-12">
@@ -45,12 +39,22 @@ export function SlideClutchMoments({ moments }: SlideClutchMomentsProps) {
               <p className="mb-2 text-sm uppercase tracking-wider text-muted-foreground">
                 {moment.label}
               </p>
-              <p className="text-3xl font-bold text-foreground md:text-4xl">
+              <p className="text-4xl md:text-5xl font-extrabold text-foreground">
                 {moment.value}
               </p>
-              {moment.subtitle && (
-                <p className="mt-1 text-muted-foreground">{moment.subtitle}</p>
-              )}
+                {moment.subtitle && (
+                <p className="mt-2 text-lg text-muted-foreground">
+                    {moment.subtitle.split(/(\d+\s*min)/).map((part, i) =>
+                    /\d+\s*min/.test(part) ? (
+                        <span key={i} className="font-bold text-primary">
+                        {part}
+                        </span>
+                    ) : (
+                        part
+                    )
+                    )}
+                </p>
+                )}
             </motion.div>
           ))}
         </div>

@@ -143,3 +143,63 @@ export async function generatePersonaCaption(archetype: string, stats: any, anal
 
   return afterThink.trim()
 }
+
+export async function generateStudentRoast(vibeCheck: string, archetype: string, analytics: any) {
+  const res = await fetch("https://api.k2think.ai/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${process.env.K2_API_KEY}`,
+      "Content-Type": "application/json",
+      accept: "application/json"
+    },
+    body: JSON.stringify({
+      model: "MBZUAI-IFM/K2-Think-v2",
+      temperature: 0.5,
+      stream: false,
+      messages: [
+        {
+          role: "system",
+          content: `
+            You are generating a playful, funny roast for a student based on their academic archetype and vibe check.
+
+            Rules:
+            - Be witty, sarcastic, and humorous (not mean)
+            - Keep it short (1 sentence max)
+            - Reference their archetype or academic habits
+            - Use their stats if relevant
+            - Do NOT output anything except the roast text
+
+            Return ONLY the roast text, no quotes or extra formatting.
+            `
+        },
+        {
+          role: "user",
+          content: `
+          Archetype: ${archetype}
+          Vibe Check: ${vibeCheck}
+          Analytics: ${JSON.stringify(analytics)}
+          `
+        }
+      ]
+    })
+  })
+
+  const json = await res.json()
+
+  const content =
+    json.choices?.[0]?.message?.content ||
+    json.choices?.[0]?.text ||
+    json.output ||
+    json.response ||
+    ""
+
+  if (!content) {
+    throw new Error("No response from model")
+  }
+
+  const parts = content.split("</think>")
+
+  const afterThink = parts.length > 1 ? parts[1] : content
+
+  return afterThink.trim()
+}
