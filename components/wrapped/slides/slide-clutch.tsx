@@ -22,7 +22,6 @@ export function SlideClutch({ isClutch, highWeightScore, finalsScore }: SlideClu
         >
           <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 1.5, repeat: Infinity }}>⚡</motion.span>
           Clutch Factor
-          <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 1.5, repeat: Infinity }}>🔥</motion.span>
         </motion.p>
 
         <motion.div

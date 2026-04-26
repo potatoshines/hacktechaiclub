@@ -47,9 +47,6 @@ export function SlideArchetype({ riskProfile, summary, recommendations }: SlideA
             👤
           </motion.span>
           Your Profile
-          <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity }}>
-            🔍
-          </motion.span>
         </motion.p>
 
         <motion.h2
@@ -79,7 +76,7 @@ export function SlideArchetype({ riskProfile, summary, recommendations }: SlideA
           viewport={{ once: true }}
         >
           <p className="mb-6 text-sm uppercase tracking-wider text-muted-foreground flex items-center justify-center gap-2">
-            <span>💡</span> Recommendations for Next Semester <span>🚀</span>
+            <span>💡</span> Recommendations for Next Semester
           </p>
           
           <div className="space-y-4">

@@ -26,9 +26,6 @@ export function SlideComeback({ hasComeback, worstPoint, recoveryPoint, improvem
             {hasComeback ? "🔄" : "✨"}
           </motion.span>
           {hasComeback ? "Comeback Story" : "Consistency Check"}
-          <motion.span animate={{ scale: [1, 1.2, 1], rotate: [0, -5, 5, 0] }} transition={{ duration: 2, repeat: Infinity }}>
-            {hasComeback ? "📈" : "🌟"}
-          </motion.span>
         </motion.p>
 
         {hasComeback && worstPoint && recoveryPoint ? (

@@ -6,11 +6,12 @@ import { WrappedSection } from "../wrapped-section"
 interface SlideOpeningProps {
   grade: string
   persona: string
+  personaCaption: string
   studentName: string | null
   semesterName: string | null
 }
 
-export function SlideOpening({ grade, persona, studentName, semesterName }: SlideOpeningProps) {
+export function SlideOpening({ grade, persona, personaCaption, studentName, semesterName }: SlideOpeningProps) {
   return (
     <WrappedSection background="spotlight">
       <div className="text-center">
@@ -28,12 +29,6 @@ export function SlideOpening({ grade, persona, studentName, semesterName }: Slid
             🎓
           </motion.span>
           CANVAS WRAPPED: UNTIL NOW
-          <motion.span 
-            animate={{ y: [0, -5, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            🚀
-          </motion.span>
         </motion.p>
 
         <motion.p
@@ -66,13 +61,22 @@ export function SlideOpening({ grade, persona, studentName, semesterName }: Slid
           className="mb-4"
         >
           <p className="mb-2 text-muted-foreground flex justify-center items-center gap-2">
-            <span>🎭</span> Your persona
+            Your persona
           </p>
           <motion.p 
             whileHover={{ scale: 1.05 }}
             className="text-3xl font-semibold text-foreground md:text-4xl inline-block"
           >
             {persona}
+          </motion.p>
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
+            viewport={{ once: true }}
+            className="mt-2 text-sm text-muted-foreground text-center"
+          >
+            {personaCaption}
           </motion.p>
         </motion.div>
 

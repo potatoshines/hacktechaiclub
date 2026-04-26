@@ -6,10 +6,11 @@ import { WrappedSection } from "../wrapped-section"
 interface SlideDisciplineProps {
   latePercent: number
   avgLateness: string
+  latestLateHours: string
   label: string
 }
 
-export function SlideDiscipline({ latePercent, avgLateness, label }: SlideDisciplineProps) {
+export function SlideDiscipline({ latePercent, avgLateness, latestLateHours, label }: SlideDisciplineProps) {
   const isGood = latePercent < 20
 
   return (
@@ -24,7 +25,6 @@ export function SlideDiscipline({ latePercent, avgLateness, label }: SlideDiscip
         >
           <motion.span animate={{ rotate: [0, 15, -15, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>⏱️</motion.span>
           Discipline Check
-          <motion.span animate={{ rotate: [0, 15, -15, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>📅</motion.span>
         </motion.p>
 
         <motion.div
@@ -54,6 +54,9 @@ export function SlideDiscipline({ latePercent, avgLateness, label }: SlideDiscip
         >
           <p className="text-muted-foreground">
             Average lateness: <span className="font-semibold text-foreground">{avgLateness}</span>
+          </p>
+          <p className="text-muted-foreground">
+            Latest late submission: <span className="font-semibold text-foreground">{latestLateHours}</span>
           </p>
         </motion.div>
 

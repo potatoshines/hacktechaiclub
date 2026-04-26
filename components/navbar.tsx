@@ -13,6 +13,7 @@ export function Navbar() {
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between">
         <Link href="/" className="group flex items-center gap-2">
+          <img src="/icon.png" alt="Logo" className="h-8 w-8" />
           <span className="text-lg font-semibold tracking-tight text-foreground">
             Canvas Wrapped
           </span>

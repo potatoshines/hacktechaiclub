@@ -9,6 +9,9 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Canvas Wrapped",
   description: "Your Canvas semester, wrapped up in style",
+  icons: {
+    icon: '/icon.png', // Replace with your logo file path, e.g., '/logo.png'
+  },
 }
 
 export default function RootLayout({

@@ -3,17 +3,17 @@
 import { motion } from "framer-motion"
 import { WrappedSection } from "../wrapped-section"
 
-interface KeyMoment {
+interface ClutchMoment {
   label: string
   value: string
   subtitle?: string
 }
 
-interface SlideKeyMomentsProps {
-  moments: KeyMoment[]
+interface SlideClutchMomentsProps {
+  moments: ClutchMoment[]
 }
 
-export function SlideKeyMoments({ moments }: SlideKeyMomentsProps) {
+export function SlideClutchMoments({ moments }: SlideClutchMomentsProps) {
   return (
     <WrappedSection background="particles">
       <div className="text-center">
@@ -25,9 +25,12 @@ export function SlideKeyMoments({ moments }: SlideKeyMomentsProps) {
           className="mb-12 text-lg text-muted-foreground flex items-center justify-center gap-2"
         >
           <motion.span animate={{ scale: [1, 1.2, 1], rotate: [0, 10, -10, 0] }} transition={{ duration: 2, repeat: Infinity }}>
-            🗝️
+            ⚡
           </motion.span>
-          Key Moments
+          Clutch Moments
+          <motion.span animate={{ scale: [1, 1.2, 1], rotate: [0, -10, 10, 0] }} transition={{ duration: 2, repeat: Infinity }}>
+            🔥
+          </motion.span>
         </motion.p>
 
         <div className="space-y-12">

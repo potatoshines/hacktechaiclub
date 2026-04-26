@@ -49,7 +49,6 @@ export function SlidePerformance({ overallPercent, strengths, vsClass }: SlidePe
         >
           <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity }}>📈</motion.span>
           Performance Snapshot
-          <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity }}>🎯</motion.span>
         </motion.p>
 
         <motion.div

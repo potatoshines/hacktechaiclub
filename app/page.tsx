@@ -10,6 +10,7 @@ import { SlideDiscipline } from "@/components/wrapped/slides/slide-discipline"
 import { SlideClutch } from "@/components/wrapped/slides/slide-clutch"
 import { SlideComeback } from "@/components/wrapped/slides/slide-comeback"
 import { SlideKeyMoments } from "@/components/wrapped/slides/slide-key-moments"
+import { SlideClutchMoments } from "@/components/wrapped/slides/slide-clutch-moments"
 import { SlideVibeCheck } from "@/components/wrapped/slides/slide-vibe-check"
 import { SlideArchetype } from "@/components/wrapped/slides/slide-archetype"
 import { SlideShare } from "@/components/wrapped/slides/slide-share"
@@ -55,6 +56,7 @@ type AnalyticsData = {
     summary: string
     vibeCheck: string
     recommendations: string[]
+    caption: string
   }
 }
 
@@ -92,6 +94,10 @@ function buildSlideProps(data: AnalyticsData) {
     ? Math.round(pctCourses.reduce((s, c) => s + (c.percentileVsClass ?? 0), 0) / pctCourses.length)
     : null
 
+  // Latest late submission in hours
+  const latestLateMinutes = Math.max(...courses.map(c => c.latestLateMinutes ?? 0))
+  const latestLateHours = latestLateMinutes > 0 ? `${(latestLateMinutes / 60).toFixed(1)} hrs` : "—"
+
   // Comeback: find largest positive trend
   const trendCourses = courses.filter(c => c.trend != null)
   const bestTrend = trendCourses.length
@@ -104,7 +110,7 @@ function buildSlideProps(data: AnalyticsData) {
     .filter(c => c.closestToDeadlineMinutes != null)
     .sort((a, b) => (a.closestToDeadlineMinutes ?? 999999) - (b.closestToDeadlineMinutes ?? 999999))[0]
 
-  // Key moments
+  // Key moments (courses)
   const keyMoments = [
     {
       label: "Best Course",
@@ -116,6 +122,10 @@ function buildSlideProps(data: AnalyticsData) {
       value: crossCourse.worstClass ?? "—",
       subtitle: worstCourse?.overallAvgScore != null ? `${worstCourse.overallAvgScore}% overall` : undefined,
     },
+  ]
+
+  // Clutch moments
+  const clutchMoments = [
     {
       label: "Total Clutch Submissions",
       value: String(crossCourse.totalClutch),
@@ -134,6 +144,7 @@ function buildSlideProps(data: AnalyticsData) {
     // SlideOpening
     grade: crossCourse.overallAvgScore != null ? `${crossCourse.overallAvgScore}%` : "—",
     persona: persona.archetype ?? "Unknown",
+    personaCaption: persona.caption ?? "",
     studentName: data.student_name,
     semesterName: data.semester_name,
 
@@ -147,6 +158,7 @@ function buildSlideProps(data: AnalyticsData) {
     // SlideDiscipline
     latePercent,
     avgLateness,
+    latestLateHours,
     disciplineLabel: latePercent > 30
       ? "Chronic Last-Minute Operator"
       : latePercent > 10
@@ -171,6 +183,9 @@ function buildSlideProps(data: AnalyticsData) {
 
     // SlideKeyMoments
     keyMoments,
+
+    // SlideClutchMoments
+    clutchMoments,
 
     // SlideArchetype
     riskProfile: persona.archetype ?? "Unknown",
@@ -254,6 +269,7 @@ export default function Home() {
       <SlideOpening
         grade={p.grade}
         persona={p.persona}
+        personaCaption={p.personaCaption}
         studentName={p.studentName}
         semesterName={p.semesterName}
       />
@@ -267,6 +283,7 @@ export default function Home() {
       <SlideDiscipline
         latePercent={p.latePercent}
         avgLateness={p.avgLateness}
+        latestLateHours={p.latestLateHours}
         label={p.disciplineLabel}
       />
 
@@ -275,6 +292,8 @@ export default function Home() {
         highWeightScore={p.highWeightScore}
         finalsScore={p.finalsScore}
       />
+
+      <SlideClutchMoments moments={p.clutchMoments} />
 
       <SlideComeback
         hasComeback={p.hasComeback}

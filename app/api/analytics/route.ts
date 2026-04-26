@@ -4,7 +4,7 @@
 
 import { NextResponse } from "next/server"
 import { computeAnalytics } from "@/lib/analytics"
-import { classifyStudent } from "@/lib/llm"
+import { classifyStudent, generatePersonaCaption } from "@/lib/llm"
 
 const CANVAS_BASE = "https://canvas.pasadena.edu/api/v1"
 
@@ -162,12 +162,28 @@ export async function POST(req: Request) {
       }, { status: 500 })
     }
 
+    // 3.5. Generate persona caption
+    let personaCaption
+    try {
+      personaCaption = await generatePersonaCaption(
+        persona.archetype,
+        persona.stats,
+        analytics
+      )
+    } catch (err) {
+      console.error("Persona caption generation error:", err)
+      personaCaption = "Based on your academic performance across courses."
+    }
+
     // 4. Final combined object — consumed by page.tsx
     return NextResponse.json({
       student_name: canvasData.student_name,
       semester_name: canvasData.semester_name,
       analytics,   // { crossCourse, courses[] }
-      persona,     // { archetype, stats, summary, recommendations }
+      persona: {
+        ...persona,
+        caption: personaCaption,
+      },
     })
   } catch (err) {
     console.error("Unexpected error:", err)

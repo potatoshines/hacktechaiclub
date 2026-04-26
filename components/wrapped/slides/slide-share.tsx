@@ -83,7 +83,7 @@ export function SlideShare({ onShare, onDownload }: SlideShareProps) {
           viewport={{ once: true }}
           className="mb-4 text-5xl font-bold text-foreground md:text-6xl flex items-center justify-center gap-2"
         >
-          <span>🎬</span> {"That's a Wrap!"} <span>✨</span>
+          <span>🎬</span> {"That's a Wrap!"}
         </motion.h2>
 
         <motion.p
@@ -93,7 +93,7 @@ export function SlideShare({ onShare, onDownload }: SlideShareProps) {
           viewport={{ once: true }}
           className="mb-12 text-lg text-muted-foreground flex items-center justify-center gap-2"
         >
-          Share your semester achievements with friends <span>📱</span>
+          Share your semester achievements with friends
         </motion.p>
 
         <motion.div
