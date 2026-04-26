@@ -20,9 +20,11 @@ export function SlideDiscipline({ latePercent, avgLateness, label }: SlideDiscip
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mb-8 text-lg text-muted-foreground"
+          className="mb-8 text-lg text-muted-foreground flex items-center justify-center gap-2"
         >
+          <motion.span animate={{ rotate: [0, 15, -15, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>⏱️</motion.span>
           Discipline Check
+          <motion.span animate={{ rotate: [0, 15, -15, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>📅</motion.span>
         </motion.p>
 
         <motion.div
@@ -35,7 +37,12 @@ export function SlideDiscipline({ latePercent, avgLateness, label }: SlideDiscip
           <span className={`text-7xl font-bold md:text-8xl ${isGood ? "text-primary" : "text-accent"}`}>
             {latePercent}%
           </span>
-          <p className="mt-2 text-xl text-muted-foreground">late submissions</p>
+          <p className="mt-2 text-xl text-muted-foreground flex items-center justify-center gap-2">
+            late submissions
+            <motion.span animate={{ x: isGood ? [0, 5, 0] : [0, -5, 0] }} transition={{ duration: 1, repeat: Infinity }}>
+              {isGood ? "🏃‍♂️" : "🐢"}
+            </motion.span>
+          </p>
         </motion.div>
 
         <motion.div

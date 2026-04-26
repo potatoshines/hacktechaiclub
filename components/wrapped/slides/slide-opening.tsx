@@ -19,9 +19,21 @@ export function SlideOpening({ grade, persona, studentName, semesterName }: Slid
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mb-2 text-sm uppercase tracking-wider text-muted-foreground"
+          className="mb-2 text-sm uppercase tracking-wider text-muted-foreground flex items-center justify-center gap-2"
         >
-          CANVAS WRAPPED: UNTIL NOW:
+          <motion.span 
+            animate={{ rotate: [0, -10, 10, -10, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            🎓
+          </motion.span>
+          CANVAS WRAPPED: UNTIL NOW
+          <motion.span 
+            animate={{ y: [0, -5, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            🚀
+          </motion.span>
         </motion.p>
 
         <motion.p
@@ -53,10 +65,15 @@ export function SlideOpening({ grade, persona, studentName, semesterName }: Slid
           viewport={{ once: true }}
           className="mb-4"
         >
-          <p className="mb-2 text-muted-foreground">Your persona</p>
-          <p className="text-3xl font-semibold text-foreground md:text-4xl">
-            {persona}
+          <p className="mb-2 text-muted-foreground flex justify-center items-center gap-2">
+            <span>🎭</span> Your persona
           </p>
+          <motion.p 
+            whileHover={{ scale: 1.05 }}
+            className="text-3xl font-semibold text-foreground md:text-4xl inline-block"
+          >
+            {persona}
+          </motion.p>
         </motion.div>
 
         <motion.div

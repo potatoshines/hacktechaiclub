@@ -18,9 +18,11 @@ export function SlideClutch({ isClutch, highWeightScore, finalsScore }: SlideClu
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mb-8 text-lg text-muted-foreground"
+          className="mb-8 text-lg text-muted-foreground flex items-center justify-center gap-2"
         >
+          <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 1.5, repeat: Infinity }}>⚡</motion.span>
           Clutch Factor
+          <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 1.5, repeat: Infinity }}>🔥</motion.span>
         </motion.p>
 
         <motion.div
@@ -30,9 +32,13 @@ export function SlideClutch({ isClutch, highWeightScore, finalsScore }: SlideClu
           viewport={{ once: true }}
           className="mb-12"
         >
-          <span className="text-6xl md:text-8xl">
+          <motion.span 
+            animate={{ scale: isClutch ? [1, 1.1, 1] : [1, 0.9, 1], rotate: isClutch ? [0, 5, -5, 0] : [0, 2, -2, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="text-6xl md:text-8xl inline-block"
+          >
             {isClutch ? "🎯" : "📉"}
-          </span>
+          </motion.span>
         </motion.div>
 
         <motion.h2

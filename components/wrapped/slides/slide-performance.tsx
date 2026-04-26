@@ -45,9 +45,11 @@ export function SlidePerformance({ overallPercent, strengths, vsClass }: SlidePe
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mb-6 text-lg text-muted-foreground"
+          className="mb-6 text-lg text-muted-foreground flex items-center justify-center gap-2"
         >
+          <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity }}>📈</motion.span>
           Performance Snapshot
+          <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity }}>🎯</motion.span>
         </motion.p>
 
         <motion.div
@@ -80,9 +82,10 @@ export function SlidePerformance({ overallPercent, strengths, vsClass }: SlidePe
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, delay: 0.5 + i * 0.1, type: "spring" }}
                 viewport={{ once: true }}
-                className="rounded-full border border-primary/30 px-5 py-2 text-sm text-primary"
+                className="rounded-full border border-primary/30 px-5 py-2 text-sm text-primary flex items-center gap-2"
+                whileHover={{ scale: 1.1, backgroundColor: "rgba(var(--primary), 0.1)" }}
               >
-                {strength}
+                <span>✨</span> {strength}
               </motion.span>
             ))}
           </div>

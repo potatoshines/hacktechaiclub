@@ -20,9 +20,15 @@ export function SlideComeback({ hasComeback, worstPoint, recoveryPoint, improvem
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mb-8 text-lg text-muted-foreground"
+          className="mb-8 text-lg text-muted-foreground flex items-center justify-center gap-2"
         >
+          <motion.span animate={{ scale: [1, 1.2, 1], rotate: [0, 5, -5, 0] }} transition={{ duration: 2, repeat: Infinity }}>
+            {hasComeback ? "🔄" : "✨"}
+          </motion.span>
           {hasComeback ? "Comeback Story" : "Consistency Check"}
+          <motion.span animate={{ scale: [1, 1.2, 1], rotate: [0, -5, 5, 0] }} transition={{ duration: 2, repeat: Infinity }}>
+            {hasComeback ? "📈" : "🌟"}
+          </motion.span>
         </motion.p>
 
         {hasComeback && worstPoint && recoveryPoint ? (
@@ -78,7 +84,11 @@ export function SlideComeback({ hasComeback, worstPoint, recoveryPoint, improvem
             viewport={{ once: true }}
             className="mb-8"
           >
-            <span className="text-7xl">👑</span>
+            <motion.span 
+              className="text-7xl inline-block"
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >👑</motion.span>
           </motion.div>
         )}
 

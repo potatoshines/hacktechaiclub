@@ -41,9 +41,15 @@ export function SlideArchetype({ riskProfile, summary, recommendations }: SlideA
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mb-4 text-lg text-muted-foreground"
+          className="mb-4 text-lg text-muted-foreground flex items-center justify-center gap-2"
         >
+          <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity }}>
+            👤
+          </motion.span>
           Your Profile
+          <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity }}>
+            🔍
+          </motion.span>
         </motion.p>
 
         <motion.h2
@@ -72,8 +78,8 @@ export function SlideArchetype({ riskProfile, summary, recommendations }: SlideA
           transition={{ duration: 0.6, delay: 0.6 }}
           viewport={{ once: true }}
         >
-          <p className="mb-6 text-sm uppercase tracking-wider text-muted-foreground">
-            Recommendations for Next Semester
+          <p className="mb-6 text-sm uppercase tracking-wider text-muted-foreground flex items-center justify-center gap-2">
+            <span>💡</span> Recommendations for Next Semester <span>🚀</span>
           </p>
           
           <div className="space-y-4">

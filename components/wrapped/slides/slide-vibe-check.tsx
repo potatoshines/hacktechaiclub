@@ -16,9 +16,15 @@ export function SlideVibeCheck({ vibeCheck }: SlideVibeCheckProps) {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mb-4 text-sm uppercase tracking-[0.3em] text-muted-foreground"
+          className="mb-4 text-sm uppercase tracking-[0.3em] text-muted-foreground flex items-center justify-center gap-2"
         >
+          <motion.span animate={{ rotate: [0, 10, -10, 0] }} transition={{ duration: 2, repeat: Infinity }}>
+            🤖
+          </motion.span>
           AI Vibe Check
+          <motion.span animate={{ rotate: [0, -10, 10, 0] }} transition={{ duration: 2, repeat: Infinity }}>
+            ✨
+          </motion.span>
         </motion.p>
 
         <motion.div

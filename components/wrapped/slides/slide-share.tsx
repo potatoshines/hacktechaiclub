@@ -69,7 +69,11 @@ export function SlideShare({ onShare, onDownload }: SlideShareProps) {
           viewport={{ once: true }}
           className="mb-8"
         >
-          <span className="text-8xl">🎉</span>
+          <motion.span 
+            className="text-8xl inline-block"
+            animate={{ rotate: [0, -10, 10, -10, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >🎉</motion.span>
         </motion.div>
 
         <motion.h2
@@ -77,9 +81,9 @@ export function SlideShare({ onShare, onDownload }: SlideShareProps) {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true }}
-          className="mb-4 text-5xl font-bold text-foreground md:text-6xl"
+          className="mb-4 text-5xl font-bold text-foreground md:text-6xl flex items-center justify-center gap-2"
         >
-          {"That's a Wrap!"}
+          <span>🎬</span> {"That's a Wrap!"} <span>✨</span>
         </motion.h2>
 
         <motion.p
@@ -87,9 +91,9 @@ export function SlideShare({ onShare, onDownload }: SlideShareProps) {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
-          className="mb-12 text-lg text-muted-foreground"
+          className="mb-12 text-lg text-muted-foreground flex items-center justify-center gap-2"
         >
-          Share your semester achievements with friends
+          Share your semester achievements with friends <span>📱</span>
         </motion.p>
 
         <motion.div
