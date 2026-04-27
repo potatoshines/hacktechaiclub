@@ -6,8 +6,6 @@ import { NextResponse } from "next/server"
 import { computeAnalytics } from "@/lib/analytics"
 import { classifyStudent, generatePersonaCaption, generateStudentRoast } from "@/lib/llm"
 
-const CANVAS_BASE = "https://canvas.pasadena.edu/api/v1"
-
 function pickSemesterName(courses: any[]): string | null {
   const termNames = courses
     .map((course) => course?.term?.name)
@@ -45,17 +43,17 @@ async function fetchJSON(url: string, headers: Record<string, string>): Promise<
   try { return JSON.parse(text) } catch { return null }
 }
 
-async function fetchCanvasData(token: string) {
+async function fetchCanvasData(token: string, canvasBase: string) {
   const headers: Record<string, string> = { Authorization: `Bearer ${token}` }
 
-  const profile = await fetchJSON(`${CANVAS_BASE}/users/self/profile`, headers)
+  const profile = await fetchJSON(`${canvasBase}/users/self/profile`, headers)
   const student_name = profile?.name ?? profile?.short_name ?? null
 
   const [activeCourses, completedCourses, activeEnrollments, completedEnrollments] = await Promise.all([
-    fetchAllPages(`${CANVAS_BASE}/courses?include[]=term&include[]=total_scores&state[]=available&per_page=100`, headers),
-    fetchAllPages(`${CANVAS_BASE}/courses?include[]=term&include[]=total_scores&state[]=completed&per_page=100`, headers),
-    fetchAllPages(`${CANVAS_BASE}/users/self/enrollments?type[]=StudentEnrollment&state[]=active&include[]=grades&per_page=100`, headers),
-    fetchAllPages(`${CANVAS_BASE}/users/self/enrollments?type[]=StudentEnrollment&state[]=completed&include[]=grades&per_page=100`, headers),
+    fetchAllPages(`${canvasBase}/courses?include[]=term&include[]=total_scores&state[]=available&per_page=100`, headers),
+    fetchAllPages(`${canvasBase}/courses?include[]=term&include[]=total_scores&state[]=completed&per_page=100`, headers),
+    fetchAllPages(`${canvasBase}/users/self/enrollments?type[]=StudentEnrollment&state[]=active&include[]=grades&per_page=100`, headers),
+    fetchAllPages(`${canvasBase}/users/self/enrollments?type[]=StudentEnrollment&state[]=completed&include[]=grades&per_page=100`, headers),
   ])
 
   const enrollmentMap = new Map<number, any>()
@@ -79,8 +77,8 @@ async function fetchCanvasData(token: string) {
       const current_score = enrollment?.grades?.current_score ?? fallback?.computed_current_score ?? null
 
       const [rawAssignments, submissions] = await Promise.all([
-        fetchAllPages(`${CANVAS_BASE}/courses/${id}/assignments?include[]=score_statistics&include[]=submission&per_page=100&order_by=due_at`, headers),
-        fetchAllPages(`${CANVAS_BASE}/courses/${id}/students/submissions?student_ids[]=self&per_page=100`, headers),
+        fetchAllPages(`${canvasBase}/courses/${id}/assignments?include[]=score_statistics&include[]=submission&per_page=100&order_by=due_at`, headers),
+        fetchAllPages(`${canvasBase}/courses/${id}/students/submissions?student_ids[]=self&per_page=100`, headers),
       ])
 
       const subMap: Record<number, any> = {}
@@ -112,14 +110,18 @@ async function fetchCanvasData(token: string) {
 }
 
 export async function POST(req: Request) {
-  const { token } = await req.json()
+  const { token, canvasUrl } = await req.json()
   if (!token) return NextResponse.json({ error: "Missing token" }, { status: 400 })
+  if (!canvasUrl) return NextResponse.json({ error: "Missing Canvas URL" }, { status: 400 })
+
+  // Ensure URL ends with /api/v1
+  const canvasBase = canvasUrl.endsWith('/api/v1') ? canvasUrl : `${canvasUrl}/api/v1`
 
   try {
     // 1. Fetch live Canvas data
     let canvasData
     try {
-      canvasData = await fetchCanvasData(token)
+      canvasData = await fetchCanvasData(token, canvasBase)
     } catch (err) {
       console.error("Canvas fetch error:", err)
       return NextResponse.json({ 
@@ -138,7 +140,7 @@ export async function POST(req: Request) {
     // 2. Compute analytics (pure, no network)
     let analytics
     try {
-      analytics = computeAnalytics(canvasData)
+      analytics = computeAnalytics(canvasData, canvasUrl)
     } catch (err) {
       console.error("Analytics computation error:", err)
       return NextResponse.json({ 

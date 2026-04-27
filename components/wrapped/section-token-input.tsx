@@ -8,17 +8,18 @@ import Link from "next/link"
 import { WrappedSection } from "./wrapped-section"
 
 interface SectionTokenInputProps {
-  onSubmit: (token: string) => void
+  onSubmit: (token: string, canvasUrl: string) => void
   isLoading?: boolean
 }
 
 export function SectionTokenInput({ onSubmit, isLoading }: SectionTokenInputProps) {
   const [token, setToken] = useState("")
+  const [canvasUrl, setCanvasUrl] = useState("")
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (token.trim()) {
-      onSubmit(token.trim())
+    if (token.trim() && canvasUrl.trim()) {
+      onSubmit(token.trim(), canvasUrl.trim())
     }
   }
 
@@ -57,7 +58,7 @@ export function SectionTokenInput({ onSubmit, isLoading }: SectionTokenInputProp
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mx-auto mb-12 max-w-lg text-pretty text-lg text-muted-foreground"
         >
-          Enter your Canvas access token to see your personalized semester recap.
+          Enter your school's Canvas URL and access token to see your personalized semester recap.
         </motion.p>
 
         <motion.form
@@ -67,6 +68,17 @@ export function SectionTokenInput({ onSubmit, isLoading }: SectionTokenInputProp
           onSubmit={handleSubmit}
           className="mx-auto flex max-w-md flex-col gap-4"
         >
+          <div className="text-center">
+            <label className="text-sm text-muted-foreground mb-2 block">School Canvas URL</label>
+            <Input
+              type="url"
+              placeholder="https://your-school.instructure.com"
+              value={canvasUrl}
+              onChange={(e) => setCanvasUrl(e.target.value)}
+              className="h-14 rounded-full border-border/50 bg-card/50 px-6 text-center text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary"
+              disabled={isLoading}
+            />
+          </div>
           <Input
             type="password"
             placeholder="Paste your Canvas token here..."
@@ -79,7 +91,7 @@ export function SectionTokenInput({ onSubmit, isLoading }: SectionTokenInputProp
           <Button
             type="submit"
             size="lg"
-            disabled={!token.trim() || isLoading}
+            disabled={!token.trim() || !canvasUrl.trim() || isLoading}
             className="h-14 rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
           >
             {isLoading ? (

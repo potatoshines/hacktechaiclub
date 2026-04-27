@@ -27,9 +27,19 @@ function avg(arr: number[]): number | null {
   return arr.reduce((a, b) => a + b, 0) / arr.length
 }
 
-export function computeAnalytics(rawData: { courses: any[] }) {
+export function computeAnalytics(rawData: { courses: any[] }, canvasUrl?: string) {
+  // Check if this is Pasadena City College (canvas.pasadena.edu)
+  const isPasadena = canvasUrl?.includes('canvas.pasadena.edu') ?? false
+  
   const courses = (rawData.courses as Course[])
-    .filter((course) => /^[A-Za-z]{3}\d{2}/.test(course.name))
+    .filter((course) => {
+      // Only apply the Fal/Win/Spr/Sum + 2 digits filter for Pasadena
+      if (isPasadena) {
+        return /^[A-Za-z]{3}\d{2}/.test(course.name)
+      }
+      // For other schools, include all courses
+      return true
+    })
     .map((course) => {
       let totalScore = 0
       let totalPossible = 0

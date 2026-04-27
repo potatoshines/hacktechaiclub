@@ -207,7 +207,7 @@ export default function Home() {
   const [slideProps, setSlideProps] = useState<ReturnType<typeof buildSlideProps> | null>(null)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
 
-  const handleTokenSubmit = async (token: string) => {
+  const handleTokenSubmit = async (token: string, canvasUrl: string) => {
     setAppState("loading")
     setErrorMsg(null)
 
@@ -215,7 +215,7 @@ export default function Home() {
       const res = await fetch("/api/analytics", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token }),
+        body: JSON.stringify({ token, canvasUrl }),
       })
 
       const contentType = res.headers.get("content-type") ?? ""
